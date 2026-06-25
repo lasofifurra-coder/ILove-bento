@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ILove Bento - ¡Cocina con Amor y Ternura!</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Fredoka:wght@300;400;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            quicksand: ['Quicksand', 'sans-serif'],
+            comfortaa: ['Comfortaa', 'sans-serif'],
+            fredoka: ['Fredoka', 'sans-serif'],
+          },
+          colors: {
+            crema: '#FFFDF9',
+            salmon: {
+              DEFAULT: '#FFA099',
+              light: '#FFB8B3',
+              dark: '#E0837D'
+            },
+            menta: {
+              DEFAULT: '#A8E6CF',
+              light: '#C7F0DF',
+              dark: '#8CD1B5'
+            },
+            huevo: {
+              DEFAULT: '#FFE066',
+              light: '#FFF099',
+              dark: '#E6C23C'
+            },
+            pastelBlue: '#D4F0F0',
+            pastelPurple: '#E8D7F1',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Cute Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FFFDF9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FFA099;
+      border-radius: 999px;
+      border: 3px solid #FFFDF9;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #E0837D;
+    }
+
+    /* Keyframe Animations */
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+    .animate-float {
+      animation: floaty 4s ease-in-out infinite;
+    }
+
+    @keyframes benty-jump {
+      0%, 100% { transform: translateY(0px) scaleY(1); }
+      45% { transform: translateY(-15px) scaleY(0.9); }
+      50% { transform: translateY(-15px) scaleY(1); }
+      55% { transform: translateY(-15px) scaleY(1.05); }
+      90% { transform: translateY(0px) scaleY(1); }
+    }
+    .animate-benty {
+      animation: benty-jump 2.5s ease-in-out infinite;
+    }
+
+    @keyframes spin-slow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 20s linear infinite;
+    }
+
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.02); }
+    }
+    .animate-pulse-soft {
+      animation: pulse-soft 3s ease-in-out infinite;
+    }
+
+    /* Custom Gingham Pattern background */
+    .bg-gingham {
+      background-color: #ffffff;
+      background-image: 
+        linear-gradient(90deg, rgba(255,160,153,0.15) 50%, transparent 50%),
+        linear-gradient(rgba(255,160,153,0.15) 50%, transparent 50%);
+      background-size: 24px 24px;
+    }
+
+    /* Hand-drawn style cards */
+    .border-kawaii {
+      border: 3px solid #4A4A4A;
+      box-shadow: 4px 4px 0px #4A4A4A;
+    }
+    .border-kawaii-salmon {
+      border: 3px solid #FFA099;
+      box-shadow: 5px 5px 0px rgba(255,160,153,0.3);
+    }
+    .border-kawaii-menta {
+      border: 3px solid #A8E6CF;
+      box-shadow: 5px 5px 0px rgba(168,230,207,0.3);
+    }
+
+    /* Sticker overlay */
+    .sticker-badge {
+      background: radial-gradient(circle, #FFE066 60%, #FFFDF9 100%);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body class="bg-crema font-quicksand text-stone-700 min-h-screen flex flex-col justify-between">
+
+  <!-- TOP DECORATIVE RIBBON -->
+  <div class="h-2 w-full bg-gradient-to-r from-salmon via-huevo to-menta"></div>
+
+  <!-- MAIN WRAPPER -->
+  <div class="max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 flex-1 flex flex-col">
+    
+    <!-- HEADER -->
+    <header class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 pb-4 border-b-2 border-dashed border-salmon/20">
+      
+      <!-- Brand & Mascot Logo -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="app.setView('pantry')">
+        <div class="w-14 h-14 bg-salmon rounded-3xl flex items-center justify-center text-3xl shadow-md border-b-4 border-salmon-dark animate-float">
+          🍱
+        </div>
+        <div>
+          <h1 class="text-3xl font-black text-salmon font-fredoka flex items-center tracking-tight gap-1">
+            ILove bento <span class="text-xs text-huevo-dark bg-huevo/30 px-2.5 py-0.5 rounded-full font-bold">PRO</span>
+          </h1>
+          <p class="text-[11px] text-stone-400 font-bold uppercase tracking-widest">Estudio de Cocina & Diseño Kawaii</p>
+        </div>
+      </div>
+
+      <!-- User Profile Widget (Memory indicator) -->
+      <div id="user-profile-widget" class="flex items-center gap-3 bg-white p-2.5 rounded-2xl border-2 border-stone-800/10 shadow-sm">
+        <div class="w-10 h-10 bg-pastelPurple rounded-xl flex items-center justify-center text-xl" id="widget-avatar">
+          🌸
+        </div>
+        <div>
+          <p class="text-xs font-bold text-stone-800" id="widget-name">Chef Creativo</p>
+          <div class="flex items-center gap-1">
+            <span class="text-[10px] font-extrabold text-salmon" id="widget-level">Nivel 1: Cortador de Zanahorias</span>
+            <span class="text-[10px] text-gray-400" id="widget-stars">⭐ 0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex items-center gap-2 bg-white/80 p-1.5 rounded-full border border-stone-100 shadow-sm">
+        <button onclick="app.setView('pantry')" id="btn-tab-pantry" class="px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-menta text-emerald-800 shadow-sm flex items-center gap-1.5">
+          🛒 Despensa
+        </button>
+        <button onclick="app.setView('scrapbook')" id="btn-tab-scrapbook" class="px-5 py-2.5 rounded-full text-xs font-bold transition-all text-stone-500 hover:text-stone-800 flex items-center gap-1.5">
+          📔 Álbum (<span id="scrapbook-counter">0</span>)
+        </button>
+        <button onclick="app.setView('config')" id="btn-tab-config" class="px-5 py-2.5 rounded-full text-xs font-bold transition-all text-stone-500 hover:text-stone-800 flex items-center gap-1.5">
+          ✨ Ajustes
+        </button>
+      </nav>
+    </header>
+
+    <!-- CONTENT PORTAL -->
+    <main id="view-portal" class="flex-1 flex flex-col justify-center">
+      
+      <!-- VIEW 1: PANTRY (LOADING INITIAL STATE) -->
+      <div id="view-pantry" class="space-y-8 animate-fade-in">
+        
+        <!-- Welcome banner with customizable Benty mascot -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-white rounded-3xl p-6 border-kawaii-salmon">
+          
+          <!-- Benty Interactive Avatar customizing and bubble -->
+          <div class="lg:col-span-5 flex flex-col sm:flex-row items-center gap-4 border-r-2 border-dashed border-salmon/10 pr-4">
+            
+            <!-- Dynamic Mascot SVG -->
+            <div class="relative w-28 h-28 flex-shrink-0 animate-benty cursor-pointer" onclick="app.tickleBenty()">
+              <div id="benty-svg-container"></div>
+              <!-- Floating sparks -->
+              <span class="absolute -top-1 -right-1 text-xl animate-pulse">✨</span>
+            </div>
+
+            <!-- Mascot Dialogue Bubble -->
+            <div class="flex-1 bg-crema border-2 border-stone-800/10 p-3.5 rounded-2xl relative">
+              <div class="absolute left-1/2 sm:-left-2 top-0 sm:top-1/3 transform -translate-x-1/2 sm:translate-x-0 -translate-y-4 sm:translate-y-0 w-4 h-4 bg-crema border-l-2 border-t-2 border-stone-800/10 rotate-45 sm:-rotate-45"></div>
+              <p class="text-xs font-extrabold text-salmon mb-1 flex items-center justify-between">
+                <span>Benty el arrocito</span> 
+                <span class="text-[9px] text-gray-400 font-normal">Tócame 🐾</span>
+              </p>
+              <p id="benty-bubble-text" class="text-xs text-stone-600 leading-relaxed italic">
+                ¡Hola! Soy Benty. Elige tus ingredientes tristes del refrigerador y diseñaré el bento más tierno de tu vida. 🌸🍙
+              </p>
+            </div>
+          </div>
+
+          <!-- Quick Setup: Name your chef & choose accessory -->
+          <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label class="text-xs font-extrabold text-stone-700 uppercase tracking-wider block">✍️ Nombre del Chef:</label>
+              <input type="text" id="chef-name-input" oninput="app.updateChefProfile()" placeholder="Ingresa tu apodo..." class="w-full px-4 py-2.5 border-2 border-stone-800/10 rounded-2xl text-xs focus:outline-none focus:border-salmon transition">
+            </div>
+            
+            <div class="space-y-1.5">
+              <label class="text-xs font-extrabold text-stone-700 uppercase tracking-wider block">👒 Sombrerito de Benty:</label>
+              <select id="benty-accessory-select" onchange="app.updateBentyAccessory(this.value)" class="w-full px-4 py-2.5 border-2 border-stone-800/10 rounded-2xl text-xs focus:outline-none focus:border-salmon bg-white transition">
+                <option value="none">Sin accesorio (Natural)</option>
+                <option value="hat" selected>Sombrerito de Chef 🧑‍🍳</option>
+                <option value="ribbon">Moño de Cereza 🎀</option>
+                <option value="glasses">Gafas Inteligentes 👓</option>
+                <option value="nightcap">Gorro de Dormir 💤</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bento Builder Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- LEFT: Interactive Bento Box visual box -->
+          <div class="lg:col-span-5 flex flex-col items-center justify-center bg-white rounded-3xl p-6 border-kawaii">
+            <div class="w-full flex justify-between items-center mb-4">
+              <h3 class="text-sm font-black text-stone-700 font-comfortaa">Tu Caja Bento Virtual 🍱</h3>
+              <!-- Division Selector -->
+              <div class="flex items-center gap-1.5 bg-crema p-1 rounded-xl border border-stone-200">
+                <button onclick="app.setBoxDivisions(2)" id="btn-div-2" class="px-2 py-1 text-[10px] font-bold rounded-lg transition-all text-stone-500">2 Divs</button>
+                <button onclick="app.setBoxDivisions(3)" id="btn-div-3" class="px-2 py-1 text-[10px] font-bold rounded-lg transition-all bg-salmon text-white">3 Divs</button>
+                <button onclick="app.setBoxDivisions(4)" id="btn-div-4" class="px-2 py-1 text-[10px] font-bold rounded-lg transition-all text-stone-500">4 Divs</button>
+              </div>
+            </div>
+
+            <!-- Visual box divider container -->
+            <div class="w-full max-w-[290px] aspect-square relative bg-crema border-4 border-salmon rounded-3xl p-4 shadow-inner flex flex-col justify-between overflow-hidden" id="bento-box-preview">
+              <!-- Content gets injected dynamically by app.renderBoxPreview() -->
+            </div>
+
+            <!-- Quick state counter -->
+            <div class="mt-6 flex flex-wrap justify-center gap-2">
+              <span class="px-3.5 py-1.5 bg-huevo text-amber-950 rounded-full text-xs font-black shadow-sm" id="pantry-counter-pill">
+                0 Ingredientes elegidos
+              </span>
+              <button onclick="app.clearPantry()" class="text-[10px] font-bold text-stone-400 hover:text-red-500 transition">Vaciar caja</button>
+            </div>
+          </div>
+
+          <!-- RIGHT: Search, custom addition, and suggestions -->
+          <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Addition Form -->
+            <div class="bg-white rounded-3xl p-6 border-2 border-stone-100 shadow-sm space-y-4">
+              <div>
+                <h3 class="text-lg font-bold text-[#FFA099] font-comfortaa">Añadir de la Alacena</h3>
+                <p class="text-xs text-stone-400">¿Qué ingredientes tienes listos para salvar hoy?</p>
+              </div>
+
+              <div class="flex gap-2">
+                <input type="text" id="ingredient-input" onkeypress="app.handleInputKey(event)" placeholder="Ej: Arroz, 1 Huevo, Jamón, Restos de pollo..." class="flex-1 px-4 py-3 border-2 border-stone-800/10 rounded-2xl text-xs focus:outline-none focus:border-salmon transition">
+                <button onclick="app.addIngredientFromInput()" class="bg-menta text-emerald-800 hover:bg-menta-dark border-b-4 border-emerald-600 px-5 rounded-2xl text-xs font-black shadow-sm transition-all">Añadir +</button>
+              </div>
+
+              <!-- List of added ingredients tags -->
+              <div id="added-ingredients-container" class="hidden p-3.5 bg-crema border-2 border-dashed border-salmon/20 rounded-2xl">
+                <p class="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider mb-2">Ingredientes añadidos:</p>
+                <div class="flex flex-wrap gap-2" id="ingredients-tag-list">
+                  <!-- Injected tags -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Suggestions bubble pool -->
+            <div class="bg-white rounded-3xl p-6 border-2 border-stone-100 shadow-sm">
+              <div class="mb-3">
+                <h4 class="text-xs font-black text-stone-700 uppercase tracking-wide">💡 Ingredientes Sugeridos</h4>
+                <p class="text-[10px] text-gray-400">Toca para agregarlos rápidamente:</p>
+              </div>
+
+              <div class="flex flex-wrap gap-2" id="suggestions-pool">
+                <!-- Injected bubbles -->
+              </div>
+            </div>
+
+            <!-- Action triggering -->
+            <div class="flex justify-end pt-2">
+              <button onclick="app.startBentoCooking()" id="btn-cook-bento" class="w-full sm:w-auto bg-menta text-emerald-900 font-extrabold border-b-4 border-emerald-500 hover:scale-105 transition-all px-8 py-4 rounded-3xl text-sm shadow-md flex items-center justify-center gap-2">
+                ¡Transformar en Bento Mágico! 🪄 Bento-ka!
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- INSPIRATIONAL CORNER: RECIPE CARDS -->
+        <div class="bg-white rounded-3xl p-6 border-2 border-stone-100 shadow-sm mt-8">
+          <div class="flex items-center gap-2.5 mb-6 border-b border-gray-100 pb-3">
+            <span class="text-2xl">🧸</span>
+            <div>
+              <h3 class="text-base font-black text-stone-800">Técnicas Kawaii y Manualidades de Corte</h3>
+              <p class="text-xs text-stone-400">Pequeños trucos de chef para decorar tus platos con sonrisas.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            
+            <div class="p-4 bg-[#FFFDF9] rounded-2xl border-2 border-stone-800/5 hover:border-salmon/30 transition-all cursor-pointer" onclick="app.showTechniqueModal('bunny')">
+              <div class="text-3xl mb-1.5">🐰</div>
+              <h4 class="text-xs font-bold text-stone-800">Manzanas Conejito</h4>
+              <p class="text-[11px] text-stone-400 line-clamp-2 mt-0.5">Cómo tallar gajos de manzana roja en tiernas orejitas de conejo.</p>
+            </div>
+
+            <div class="p-4 bg-[#FFFDF9] rounded-2xl border-2 border-stone-800/5 hover:border-salmon/30 transition-all cursor-pointer" onclick="app.showTechniqueModal('octopus')">
+              <div class="text-3xl mb-1.5">🐙</div>
+              <h4 class="text-xs font-bold text-stone-800">Salchichas Pulpo</h4>
+              <p class="text-[11px] text-stone-400 line-clamp-2 mt-0.5">El clásico japonés: salchichas cortadas con patitas que se curvan solas.</p>
+            </div>
+
+            <div class="p-4 bg-[#FFFDF9] rounded-2xl border-2 border-stone-800/5 hover:border-salmon/30 transition-all cursor-pointer" onclick="app.showTechniqueModal('tomato')">
+              <div class="text-3xl mb-1.5">❤️</div>
+              <h4 class="text-xs font-bold text-stone-800">Corazones de Cherry</h4>
+              <p class="text-[11px] text-stone-400 line-clamp-2 mt-0.5">Un simple corte angular para formar preciosos corazones saludables.</p>
+            </div>
+
+            <div class="p-4 bg-[#FFFDF9] rounded-2xl border-2 border-stone-800/5 hover:border-salmon/30 transition-all cursor-pointer" onclick="app.showTechniqueModal('carrot')">
+              <div class="text-3xl mb-1.5">🌸</div>
+              <h4 class="text-xs font-bold text-stone-800">Zanahorias de Flor</h4>
+              <p class="text-[11px] text-stone-400 line-clamp-2 mt-0.5">Corta rodajas con muescas en V para simular margaritas y flores sakura.</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VIEW 2: COOKING ANIMATION -->
+      <div id="view-cooking" class="hidden max-w-xl mx-auto flex flex-col items-center justify-center text-center py-10 space-y-8 animate-fade-in">
+        
+        <!-- Animated visual bento assembly with gingham blanket -->
+        <div class="relative w-72 h-72 flex items-center justify-center">
+          <!-- Spark aura rotating -->
+          <div class="absolute inset-0 animate-spin-slow bg-[radial-gradient(circle,_#FFE066_15%,_transparent_60%)] opacity-35"></div>
+          
+          <div class="w-60 h-60 rounded-3xl border-4 border-stone-800 shadow-xl overflow-hidden relative p-4 bg-gingham z-10 animate-float flex flex-col justify-end">
+            <!-- Sparks and stars floating inside -->
+            <div class="absolute inset-0 flex items-center justify-center bg-salmon/10">
+              <span class="text-6xl animate-ping opacity-50">⭐</span>
+            </div>
+
+            <!-- Sleeping / Cooking Benty peaking out -->
+            <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20">
+              <div class="w-16 h-16 bg-white border-2 border-stone-800 rounded-full animate-bounce flex items-center justify-center text-2xl shadow-md">
+                👨‍🍳💤
+              </div>
+              <span class="text-[10px] bg-stone-800 text-white font-extrabold px-3 py-1 rounded-full mt-2.5 shadow-sm uppercase tracking-wider">
+                Mezclando magia...
+              </span>
+            </div>
+          </div>
+
+          <div class="absolute -top-4 -left-4 text-4xl animate-bounce">🍎</div>
+          <div class="absolute -bottom-4 -right-4 text-4xl animate-bounce" style="animation-delay: 0.5s">🥦</div>
+          <div class="absolute top-1/2 -right-8 text-4xl animate-pulse">🍚</div>
+        </div>
+
+        <div class="bg-white border-2 border-stone-800/10 p-6 rounded-3xl shadow-sm w-full space-y-3">
+          <h3 class="text-xl font-bold text-salmon font-comfortaa">¡Benty está preparando la sorpresa!</h3>
+          <p id="cooking-log" class="text-sm font-semibold text-emerald-800 bg-menta/30 py-2.5 px-4 rounded-xl border-2 border-dashed border-menta">
+            Lavando el arroz con mucho amor... 🧼🍙
+          </p>
+          <p class="text-xs text-stone-400">
+            Nuestra IA está traduciendo tus ingredientes a un diseño artístico, calculando los pasos de emplatado y pintando una hermosa ilustración estilo acuarela de Studio Ghibli.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- VIEW 3: RESULT RECIPE CARD -->
+      <div id="view-result" class="hidden space-y-8 animate-fade-in">
+        
+        <!-- Title box -->
+        <div class="text-center bg-white border-kawaii p-6 rounded-3xl relative overflow-hidden">
+          <p class="text-xs text-salmon font-black uppercase tracking-widest mb-1">✨ ¡Obra de arte comestible terminada! ✨</p>
+          <h2 id="result-bento-title" class="text-3xl font-black text-stone-800 font-fredoka">Bento Fantasía</h2>
+          <p class="text-xs text-stone-400 mt-1">Tu receta mágica personalizada ilustrada con amor.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- LEFT: Polaroid illustration & save rating -->
+          <div class="lg:col-span-5 flex flex-col items-center">
+            
+            <div class="bg-white border-kawaii rounded-3xl p-5 w-full max-w-sm space-y-4">
+              <!-- Polaroid frame inner -->
+              <div class="bg-[#FFFDF9] border border-stone-200 rounded-2xl p-3 shadow-inner relative">
+                <!-- Custom decoration sticker -->
+                <div class="absolute -top-3 -right-3 sticker-badge w-12 h-12 rounded-full border-2 border-stone-800 flex items-center justify-center text-xl font-bold rotate-12" id="result-rating-sticker">
+                  🥰
+                </div>
+
+                <img id="result-bento-image" src="" alt="Bento" class="w-full aspect-square object-cover rounded-xl border border-stone-100 shadow-sm">
+                
+                <div class="pt-4 text-center">
+                  <p id="result-bento-label" class="font-comfortaa text-salmon font-bold text-sm tracking-wide line-clamp-1">
+                    Nombre del Bento
+                  </p>
+                  <p class="text-[10px] text-gray-400 mt-0.5">Diseñado con amor • Estilo Acuarela Ghibli</p>
+                </div>
+              </div>
+
+              <!-- Extra Interaction: Rate & Sticker choosing! -->
+              <div class="bg-crema p-3 rounded-2xl border border-stone-800/10 space-y-2">
+                <p class="text-[10px] font-black text-stone-500 uppercase tracking-wider text-center">¿Cómo te quedó en la vida real?</p>
+                <div class="flex justify-center gap-1.5" id="rating-stars-picker">
+                  <!-- JS will render star rating here -->
+                </div>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="flex flex-col gap-2">
+                <button onclick="app.saveCurrentBento()" class="w-full bg-salmon text-white font-extrabold border-b-4 border-salmon-dark py-3.5 px-4 rounded-2xl text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-sm">
+                  📔 Guardar en mi Álbum de Bentos
+                </button>
+                <div class="flex gap-2">
+                  <button onclick="app.copyPromptToClipboard()" class="flex-1 bg-white border-2 border-stone-800/10 hover:bg-stone-50 text-stone-600 font-bold py-2.5 px-3 rounded-xl text-xs transition">
+                    📋 Copiar Prompt
+                  </button>
+                  <button onclick="app.addToShoppingListFromBento()" class="flex-1 bg-huevo text-amber-950 font-bold border-b-2 border-huevo-dark py-2.5 px-3 rounded-xl text-xs transition">
+                    🛒 Lista de Compras
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Share advice -->
+            <div class="mt-6 w-full max-w-sm" id="result-benty-speech">
+              <!-- Replaced via JS -->
+            </div>
+
+          </div>
+
+          <!-- RIGHT: Recipe ingredients & step guides -->
+          <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Restyled ingredients -->
+            <div class="bg-white rounded-3xl p-6 border-2 border-stone-100 shadow-sm">
+              <h3 class="text-xs font-black text-stone-400 uppercase tracking-wider mb-3">📦 Ingredientes incorporados:</h3>
+              <div class="flex flex-wrap gap-2" id="result-ingredients-container">
+                <!-- tags injected here -->
+              </div>
+            </div>
+
+            <!-- Steps -->
+            <div class="bg-white rounded-3xl p-6 border-2 border-stone-100 shadow-sm space-y-4">
+              <h3 class="text-lg font-black text-stone-800 flex items-center gap-2 border-b border-gray-100 pb-3 font-comfortaa">
+                🍱 Guía de Montaje & Decoración
+              </h3>
+              
+              <div class="space-y-4" id="result-steps-container">
+                <!-- Steps with numeric counts -->
+              </div>
+            </div>
+
+            <!-- Bottom navigations -->
+            <div class="flex flex-wrap gap-3 pt-2">
+              <button onclick="app.resetPantryAndCook()" class="bg-menta text-emerald-900 font-extrabold border-b-4 border-emerald-500 hover:scale-105 transition-all px-8 py-3.5 rounded-3xl text-xs shadow-md">
+                ✨ Hacer Otro Bento
+              </button>
+              <button onclick="app.setView('scrapbook')" class="bg-white border-2 border-stone-800 text-stone-800 font-bold px-8 py-3.5 rounded-3xl text-xs shadow-sm">
+                📔 Ver mi Álbum Completo
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- VIEW 4: SCRAPBOOK (ALBUM WITH MEMORY) -->
+      <div id="view-scrapbook" class="hidden space-y-6 animate-fade-in">
+        
+        <div class="text-center bg-white border-kawaii p-6 rounded-3xl max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-salmon font-fredoka flex items-center justify-center gap-2">
+            📔 Álbum de Bentos Adorables
+          </h2>
+          <p class="text-xs text-stone-400 mt-1">Colección de tus mejores diseños. ¡Puedes calificarlos y recordar cómo cocinarlos!</p>
+        </div>
+
+        <!-- Scrapbook dashboard counters -->
+        <div class="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4" id="album-stats-container">
+          <!-- Injected via JS dynamically -->
+        </div>
+
+        <!-- Album grid container -->
+        <div id="scrapbook-empty-state" class="hidden bg-white border-2 border-dashed border-stone-800/10 rounded-3xl p-12 text-center flex flex-col items-center justify-center max-w-md mx-auto">
+          <span class="text-6xl mb-4">📖🍒</span>
+          <h3 class="text-lg font-bold text-stone-700">Tu álbum está esperando amor</h3>
+          <p class="text-xs text-stone-400 mt-2 max-w-xs leading-relaxed">
+            Ingresa tus ingredientes en la despensa, pulsa "Transformar" y guarda tus obras de arte para rellenar este álbum de recuerdos.
+          </p>
+          <button onclick="app.setView('pantry')" class="mt-6 bg-menta text-emerald-800 border-b-2 border-menta-dark px-6 py-2.5 rounded-full text-xs font-black shadow-sm">
+            Comenzar a cocinar 🍳
+          </button>
+        </div>
+
+        <div id="scrapbook-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <!-- Bento polaroids cards get injected here -->
+        </div>
+
+      </div>
+
+      <!-- VIEW 5: SETTINGS & GROCERY LIST -->
+      <div id="view-config" class="hidden space-y-8 animate-fade-in max-w-4xl mx-auto">
+        
+        <!-- Grocery List Planner Card -->
+        <div class="bg-white rounded-3xl p-6 border-kawaii-menta grid grid-cols-1 md:grid-cols-12 gap-6">
+          <div class="md:col-span-5 space-y-3">
+            <div class="w-12 h-12 bg-menta rounded-2xl flex items-center justify-center text-2xl">
+              📝
+            </div>
+            <h3 class="text-lg font-black text-stone-800 font-comfortaa">Lista de Compras Kawaii</h3>
+            <p class="text-xs text-stone-400 leading-relaxed">
+              ¿Viste alguna decoración hermosa en un bento y te falta el ingrediente estrella? Anótalo aquí para tu próxima visita de compras.
+            </p>
+            
+            <div class="flex gap-2 pt-2">
+              <input type="text" id="grocery-item-input" placeholder="Ej: Semillas de sésamo, tomates..." class="flex-1 px-3 py-2 border-2 border-stone-800/10 rounded-xl text-xs focus:outline-none focus:border-menta">
+              <button onclick="app.addGroceryItem()" class="bg-menta text-emerald-800 font-bold px-4 rounded-xl text-xs">Añadir</button>
+            </div>
+          </div>
+
+          <div class="md:col-span-7 bg-[#FFFDF9] border border-stone-200 rounded-2xl p-4 flex flex-col justify-between">
+            <div>
+              <p class="text-[10px] font-black text-stone-400 uppercase tracking-wider mb-2">Mi lista de pendientes:</p>
+              <div class="space-y-2 overflow-y-auto max-h-48" id="grocery-items-list">
+                <!-- Checkbox items -->
+              </div>
+            </div>
+            <div class="text-right pt-2 border-t border-stone-200/50 mt-4">
+              <button onclick="app.clearCompletedGrocery()" class="text-[10px] font-bold text-red-400 hover:text-red-500 transition">Limpiar seleccionados</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom preferences -->
+        <div class="bg-white rounded-3xl p-6 border-2 border-stone-100 shadow-sm space-y-6">
+          <h3 class="text-lg font-black text-stone-800 font-comfortaa">Ajustes del Perfil & Datos</h3>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <h4 class="text-xs font-black text-stone-500 uppercase tracking-wider">Reiniciar Aplicación</h4>
+              <p class="text-[11px] text-gray-400">Esto borrará todo tu historial de bentos guardados y regresará las configuraciones al estado original.</p>
+              <button onclick="app.factoryReset()" class="bg-red-50 hover:bg-red-100 text-red-500 border border-red-200 font-bold px-4 py-2.5 rounded-xl text-xs transition">
+                ⚠️ Borrar todos mis bentos guardados
+              </button>
+            </div>
+
+            <div class="space-y-2">
+              <h4 class="text-xs font-black text-stone-500 uppercase tracking-wider">Créditos de la Cocina</h4>
+              <p class="text-[11px] text-gray-400 leading-relaxed">
+                <strong>ILove Bento PRO</strong> es impulsado por la API de Inteligencia Artificial Gemini de Google (Gemini-2.5-flash-preview-09-2025 para el motor de cocina e Imagen-4.0 para las hermosas ilustraciones de acuarela).
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- TECHNIQUE MODAL DRAWERS -->
+  <div id="technique-modal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+    <div class="bg-white border-kawaii p-6 rounded-3xl max-w-md w-full space-y-4 relative animate-fade-in">
+      <button onclick="app.closeTechniqueModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-800 font-bold text-xl">×</button>
+      
+      <div class="text-center">
+        <span id="modal-emoji" class="text-5xl">🐰</span>
+        <h3 id="modal-title" class="text-xl font-black text-stone-800 font-comfortaa mt-2">Título de la Técnica</h3>
+        <p id="modal-desc" class="text-xs text-stone-400 italic">Breve descripción de la técnica kawaii.</p>
+      </div>
+
+      <div class="bg-crema p-4 rounded-2xl border border-stone-800/10 space-y-3">
+        <p class="text-[10px] font-black text-stone-500 uppercase">Instrucciones de Corte:</p>
+        <div class="space-y-2.5 text-xs text-stone-600 leading-relaxed" id="modal-steps-container">
+          <!-- Injected lists -->
+        </div>
+      </div>
+
+      <button onclick="app.closeTechniqueModal()" class="w-full bg-[#A8E6CF] text-emerald-800 font-extrabold border-b-2 border-emerald-500 py-3 rounded-xl text-xs hover:bg-[#8CD1B5] transition">
+        ¡Entendido, iré a probarlo! 🍴
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="text-center text-[11px] text-stone-400 space-y-1 py-4 border-t border-stone-100 max-w-6xl mx-auto w-full px-4 mt-6">
+    <p>© 2026 ILove Bento. Transformando ingredientes tristes en instantes de ternura total. 🌸🍱</p>
+    <p>Impulsado por el motor creativo de Google Gemini.</p>
+  </footer>
+
+  <!-- CORE APP LOGIC -->
+  <script>
+    // State storage manager
+    class BentoState {
+      constructor() {
+        this.ingredients = [];
+        this.savedBentos = [];
+        this.bentyMood = 'idle';
+        this.bentyAccessory = 'hat'; // hat, ribbon, glasses, nightcap, none
+        this.chefName = 'Chef Creativo';
+        this.boxDivisions = 3;
+        this.currentView = 'pantry';
+        this.groceryList = [];
+        this.currentResult = null;
+        this.starValue = 5;
+      }
+
+      loadFromLocalStorage() {
+        const profile = localStorage.getItem('ilovebento_profile');
+        if (profile) {
+          try {
+            const parsed = JSON.parse(profile);
+            this.chefName = parsed.chefName || 'Chef Creativo';
+            this.bentyAccessory = parsed.bentyAccessory || 'hat';
+            this.boxDivisions = parsed.boxDivisions || 3;
+          } catch(e) {}
+        }
+
+        const saved = localStorage.getItem('ilovebento_saved_list');
+        if (saved) {
+          try {
+            this.savedBentos = JSON.parse(saved);
+          } catch(e) {}
+        }
+
+        const groc = localStorage.getItem('ilovebento_grocery_list');
+        if (groc) {
+          try {
+            this.groceryList = JSON.parse(groc);
+          } catch(e) {}
+        }
+      }
+
+      saveToLocalStorage() {
+        localStorage.setItem('ilovebento_profile', JSON.stringify({
+          chefName: this.chefName,
+          bentyAccessory: this.bentyAccessory,
+          boxDivisions: this.boxDivisions
+        }));
+        localStorage.setItem('ilovebento_saved_list', JSON.stringify(this.savedBentos));
+        localStorage.setItem('ilovebento_grocery_list', JSON.stringify(this.groceryList));
+      }
+    }
+
+    class BentoApp {
+      constructor() {
+        this.state = new BentoState();
+        this.state.loadFromLocalStorage();
+        
+        // Suggested pool
+        this.suggestions = [
+          { name: 'Arroz de ayer', emoji: '🍚' },
+          { name: '1 Huevo', emoji: '🥚' },
+          { name: 'Salchichas copetín', emoji: '🌭' },
+          { name: 'Espinacas', emoji: '🥬' },
+          { name: 'Zanahoria', emoji: '🥕' },
+          { name: 'Queso amarillo', emoji: '🧀' },
+          { name: 'Tomate Cherry', emoji: '🍅' },
+          { name: 'Brócoli', emoji: '🥦' },
+          { name: 'Semillas de sésamo', emoji: '🖤' },
+          { name: 'Jamón cocido', emoji: '🍖' },
+          { name: 'Pan de molde', emoji: '🍞' },
+          { name: 'Atún en lata', emoji: '🐟' }
+        ];
+
+        // Techniques metadata
+        this.techniques = {
+          bunny: {
+            title: '🐰 Manzanas Conejito',
+            emoji: '🐰',
+            desc: 'Cómo tallar gajos de manzana roja en tiernas orejitas de conejo.',
+            steps: [
+              'Corta una manzana en gajos finos y quita las semillas de la base.',
+              'Haz un corte superficial en forma de "V" en la piel roja de la manzana.',
+              'Con cuidado, desliza el filo del cuchillo por debajo de la piel de la "V" para levantarla parcialmente hacia atrás como orejitas.',
+              'Ponlas en agua con unas gotas de limón para que no se oxiden. ¡Listo para saltar al plato!'
+            ]
+          },
+          octopus: {
+            title: '🐙 Salchichas Pulpo',
+            emoji: '🐙',
+            desc: 'El clásico bento japonés: salchichas cortadas con patitas que se curvan solas.',
+            steps: [
+              'Usa salchichas pequeñas o corta una tradicional por la mitad.',
+              'Haz cortes verticales en cruz en el extremo inferior para crear 4 patas.',
+              'Si quieres más detalles, vuelve a cortar cada pata para tener 8 patitas finas.',
+              'Dóralas en sartén con aceite y observa cómo se doblan de forma adorable.'
+            ]
+          },
+          tomato: {
+            title: '❤️ Corazones de Cherry',
+            emoji: '❤️',
+            desc: 'Un simple corte angular para formar preciosos corazones saludables.',
+            steps: [
+              'Toma un tomate cherry alargado y límpialo muy bien.',
+              'Haz un corte transversal en ángulo de 45 grados justo por la mitad.',
+              'Gira una de las mitades hacia el sentido opuesto.',
+              'Une las superficies planas cortadas. Usa un palillo para fijarlo si lo necesitas.'
+            ]
+          },
+          carrot: {
+            title: '🌸 Zanahorias de Flor',
+            emoji: '🌸',
+            desc: 'Corta rodajas con muescas en V para simular margaritas y flores sakura.',
+            steps: [
+              'Pela una zanahoria fresca y córtala en rodajas de grosor medio.',
+              'Con un cuchillo pequeño, talla 5 pequeñas muescas alrededor de la rodaja.',
+              'Arredondea el final de cada muesca para simular pétalos hermosos.',
+              'Cocínalas al vapor para que mantengan su color vibrante y queden suaves.'
+            ]
+          }
+        };
+      }
+
+      init() {
+        this.renderMascot();
+        this.renderBoxPreview();
+        this.renderSuggestions();
+        this.renderIngredientsTags();
+        this.renderScrapbook();
+        this.renderGroceryList();
+        
+        // Setup text fields
+        document.getElementById('chef-name-input').value = this.state.chefName;
+        document.getElementById('benty-accessory-select').value = this.state.bentyAccessory;
+        
+        this.updateProfileWidget();
+        this.updateCounters();
+      }
+
+      setView(viewName) {
+        this.state.currentView = viewName;
+        const views = ['pantry', 'cooking', 'result', 'scrapbook', 'config'];
+        views.forEach(v => {
+          document.getElementById(`view-${v}`).classList.add('hidden');
+          const btn = document.getElementById(`btn-tab-${v}`);
+          if (btn) {
+            btn.className = "px-5 py-2.5 rounded-full text-xs font-bold transition-all text-stone-500 hover:text-stone-800 flex items-center gap-1.5";
+          }
+        });
+
+        document.getElementById(`view-${viewName}`).classList.remove('hidden');
+        const activeBtn = document.getElementById(`btn-tab-${viewName}`);
+        if (activeBtn) {
+          if (viewName === 'pantry') {
+            activeBtn.className = "px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-menta text-emerald-800 shadow-sm flex items-center gap-1.5";
+          } else if (viewName === 'scrapbook') {
+            activeBtn.className = "px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-salmon text-white shadow-sm flex items-center gap-1.5";
+          } else if (viewName === 'config') {
+            activeBtn.className = "px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-huevo text-amber-950 shadow-sm flex items-center gap-1.5";
+          }
+        }
+
+        if (viewName === 'scrapbook') {
+          this.renderScrapbook();
+        }
+      }
+
+      // Visual Widget Update
+      updateProfileWidget() {
+        const nameEl = document.getElementById('widget-name');
+        const levelEl = document.getElementById('widget-level');
+        const starsEl = document.getElementById('widget-stars');
+        const avatarEl = document.getElementById('widget-avatar');
+
+        nameEl.innerText = this.state.chefName || 'Chef Creativo';
+        
+        // Cute dynamic levels based on saved bentos
+        const count = this.state.savedBentos.length;
+        let levelText = "Nivel 1: Cortador de Zanahorias 🥕";
+        let avatarEmoji = "🌸";
+        
+        if (count >= 10) {
+          levelText = "Nivel 4: Emperador del Arroz 👑🍙";
+          avatarEmoji = "👑";
+        } else if (count >= 5) {
+          levelText = "Nivel 3: Maestro Escultor Bento 🦊⭐";
+          avatarEmoji = "🦊";
+        } else if (count >= 2) {
+          levelText = "Nivel 2: Artesano de Salchichas 🐙🍟";
+          avatarEmoji = "🐙";
+        }
+
+        levelEl.innerText = levelText;
+        avatarEl.innerText = avatarEmoji;
+        
+        // Sum total stars
+        const totalStars = this.state.savedBentos.reduce((acc, curr) => acc + (curr.rating || 5), 0);
+        starsEl.innerText = `⭐ ${totalStars}`;
+      }
+
+      updateCounters() {
+        document.getElementById('scrapbook-counter').innerText = this.state.savedBentos.length;
+        document.getElementById('pantry-counter-pill').innerText = `${this.state.ingredients.length} Ingrediente${this.state.ingredients.length !== 1 ? 's' : ''} elegido${this.state.ingredients.length !== 1 ? 's' : ''}`;
+      }
+
+      // Profile settings saving
+      updateChefProfile() {
+        const input = document.getElementById('chef-name-input');
+        this.state.chefName = input.value.trim() || 'Chef Creativo';
+        this.state.saveToLocalStorage();
+        this.updateProfileWidget();
+      }
+
+      updateBentyAccessory(accessory) {
+        this.state.bentyAccessory = accessory;
+        this.state.saveToLocalStorage();
+        this.renderMascot();
+        this.state.bentyMood = 'proud';
+        this.setBentySpeech("¡Qué hermoso me queda! Ahora tengo más ganas de ayudarte a cocinar. 🥰👜");
+        setTimeout(() => {
+          this.state.bentyMood = 'idle';
+          this.renderMascot();
+        }, 3000);
+      }
+
+      setBentySpeech(msg) {
+        document.getElementById('benty-bubble-text').innerText = msg;
+      }
+
+      tickleBenty() {
+        const tickles = [
+          "¡Jijiji! Me haces cosquillas. 🍙✨",
+          "¿Ya pusiste el arroz a hervir? 🍚❤️",
+          "¡Cocinar con amor es el mejor condimento! 🌸",
+          "¡Recuerda cortar las zanahorias con formas tiernas! 🥕🐰",
+          "¡Me encanta mi nuevo sombrerito! ¿A que luzco precioso? 👒"
+        ];
+        const randomMsg = tickles[Math.floor(Math.random() * tickles.length)];
+        this.state.bentyMood = 'success';
+        this.renderMascot();
+        this.setBentySpeech(randomMsg);
+        setTimeout(() => {
+          this.state.bentyMood = 'idle';
+          this.renderMascot();
+        }, 2000);
+      }
+
+      setBoxDivisions(count) {
+        this.state.boxDivisions = count;
+        this.state.saveToLocalStorage();
+        
+        // highlight buttons
+        [2, 3, 4].forEach(d => {
+          const btn = document.getElementById(`btn-div-${d}`);
+          if (d === count) {
+            btn.className = "px-2 py-1 text-[10px] font-bold rounded-lg transition-all bg-salmon text-white";
+          } else {
+            btn.className = "px-2 py-1 text-[10px] font-bold rounded-lg transition-all text-stone-500";
+          }
+        });
+
+        this.renderBoxPreview();
+      }
+
+      // Render Dynamic SVG of Mascot with active accessory
+      renderMascot() {
+        const accessory = this.state.bentyAccessory;
+        const mood = this.state.bentyMood;
+
+        let eyesPart = '';
+        if (mood === 'idle') {
+          eyesPart = `
+            <circle cx="38" cy="56" r="3.5" fill="#4A4A4A" />
+            <circle cx="62" cy="56" r="3.5" fill="#4A4A4A" />
+            <path d="M47,51 L53,51" stroke="#4A4A4A" stroke-width="1.5" stroke-linecap="round" />
+          `;
+        } else if (mood === 'thinking') {
+          eyesPart = `
+            <path d="M34,53 Q38,49 42,53" fill="none" stroke="#4A4A4A" stroke-width="3" stroke-linecap="round" />
+            <path d="M58,53 Q62,49 66,53" fill="none" stroke="#4A4A4A" stroke-width="3" stroke-linecap="round" />
+            <circle cx="50" cy="25" r="5" fill="#FFE066" />
+          `;
+        } else if (mood === 'cooking') {
+          eyesPart = `
+            <path d="M33,58 L41,54" stroke="#4A4A4A" stroke-width="3" stroke-linecap="round" />
+            <path d="M33,54 L41,58" stroke="#4A4A4A" stroke-width="3" stroke-linecap="round" />
+            <path d="M59,58 Q63,54 67,58" fill="none" stroke="#4A4A4A" stroke-width="3" stroke-linecap="round" />
+          `;
+        } else if (mood === 'success') {
+          eyesPart = `
+            <path d="M31,52 C31,48 37,48 37,52 C37,56 31,60 31,60 C31,60 25,56 25,52 C25,48 31,48 31,52 Z" fill="#FFA099" />
+            <path d="M69,52 C69,48 75,48 75,52 C75,56 69,60 69,60 C69,60 63,56 63,52 C63,48 69,48 69,52 Z" fill="#FFA099" />
+          `;
+        } else if (mood === 'proud') {
+          eyesPart = `
+            <path d="M32,58 Q37,50 42,58" fill="none" stroke="#4A4A4A" stroke-width="3" stroke-linecap="round" />
+            <path d="M58,58 Q63,50 68,58" fill="none" stroke="#4A4A4A" stroke-width="3" stroke-linecap="round" />
+          `;
+        }
+
+        // Draw Accessory
+        let accessoryPart = '';
+        if (accessory === 'hat') {
+          accessoryPart = `
+            <path d="M32,22 C32,8 40,6 50,6 C60,6 68,8 68,22 Z" fill="#E2F0D9" stroke="#333" stroke-width="2" />
+            <rect x="35" y="20" width="30" height="6" fill="#A8E6CF" rx="2" stroke="#333" stroke-width="2" />
+          `;
+        } else if (accessory === 'ribbon') {
+          accessoryPart = `
+            <circle cx="28" cy="20" r="10" fill="#FFA099" stroke="#333" stroke-width="2" />
+            <circle cx="42" cy="20" r="10" fill="#FFA099" stroke="#333" stroke-width="2" />
+            <polygon points="35,16 31,24 39,24" fill="#FFE066" stroke="#333" stroke-width="2" />
+          `;
+        } else if (accessory === 'glasses') {
+          accessoryPart = `
+            <rect x="25" y="48" width="20" height="15" rx="3" fill="none" stroke="#333" stroke-width="3" />
+            <rect x="55" y="48" width="20" height="15" rx="3" fill="none" stroke="#333" stroke-width="3" />
+            <line x1="45" y1="55" x2="55" y2="55" stroke="#333" stroke-width="3" />
+          `;
+        } else if (accessory === 'nightcap') {
+          accessoryPart = `
+            <path d="M30,22 Q50,4 75,15 Q65,28 30,22 Z" fill="#D4F0F0" stroke="#333" stroke-width="2" />
+            <circle cx="75" cy="15" r="5" fill="#FFF" stroke="#333" stroke-width="1.5" />
+          `;
+        }
+
+        const svgCode = `
+          <svg viewBox="0 0 100 100" class="w-full h-full">
+            <ellipse cx="50" cy="85" rx="30" ry="8" fill="#EADCD3" opacity="0.6" />
+            <path d="M50,15 C28,15 25,50 25,75 C25,85 35,90 50,90 C65,90 75,85 75,75 C75,50 72,15 50,15 Z" fill="#FFF" stroke="#E2C9BD" stroke-width="2.5" />
+            <circle cx="36" cy="64" r="7" fill="#FFA099" opacity="0.6" />
+            <circle cx="64" cy="64" r="7" fill="#FFA099" opacity="0.6" />
+            ${eyesPart}
+            <path d="M45,67 Q50,73 55,67" fill="none" stroke="#4A4A4A" stroke-width="2.5" stroke-linecap="round" />
+            ${accessoryPart}
+          </svg>
+        `;
+        document.getElementById('benty-svg-container').innerHTML = svgCode;
+      }
+
+      // Render the virtual bento box base layout
+      renderBoxPreview() {
+        const container = document.getElementById('bento-box-preview');
+        const count = this.state.boxDivisions;
+        const ing = this.state.ingredients;
+
+        let contentHtml = '';
+        if (count === 2) {
+          contentHtml = `
+            <div class="absolute inset-y-0 left-1/2 w-1.5 bg-salmon/40"></div>
+            <div class="flex items-center justify-center w-[45%] h-full z-10 text-center">
+              ${ing.length > 0 ? `<div class="animate-bounce text-4xl">🍚<p class="text-[10px] font-bold text-stone-500 mt-1">${ing[0]}</p></div>` : '<span class="text-xs text-stone-300">Base</span>'}
+            </div>
+            <div class="absolute right-4 inset-y-0 w-[45%] flex flex-col items-center justify-center z-10 text-center">
+              ${ing.length > 1 ? `<div class="animate-float text-4xl">🍳<p class="text-[10px] font-bold text-stone-500 mt-1">${ing[1]}</p></div>` : '<span class="text-xs text-stone-300">Proteínas</span>'}
+            </div>
+          `;
+        } else if (count === 3) {
+          contentHtml = `
+            <div class="absolute inset-y-0 left-1/2 w-1.5 bg-salmon/40"></div>
+            <div class="absolute inset-x-0 top-2/3 h-1.5 bg-salmon/40"></div>
+            <div class="absolute left-4 top-4 w-[40%] h-[55%] flex flex-col items-center justify-center z-10 text-center">
+              ${ing.length > 0 ? `<div class="animate-bounce text-4xl">🍚<p class="text-[9px] font-bold text-stone-400 mt-1">${ing[0]}</p></div>` : '<span class="text-[11px] text-stone-300">Base</span>'}
+            </div>
+            <div class="absolute right-4 top-4 w-[40%] h-[55%] flex flex-col items-center justify-center z-10 text-center">
+              ${ing.length > 1 ? `<div class="animate-float text-4xl">🍳<p class="text-[9px] font-bold text-stone-400 mt-1">${ing[1]}</p></div>` : '<span class="text-[11px] text-stone-300">Proteínas</span>'}
+            </div>
+            <div class="absolute inset-x-4 bottom-2 h-[28%] flex items-center justify-around z-10 text-center">
+              ${ing.length > 2 ? `
+                <div class="flex items-center gap-1.5 bg-white/70 px-2 py-1 rounded-xl border border-stone-200">
+                  <span class="text-xl">🥬</span>
+                  <span class="text-[10px] font-bold text-stone-500 line-clamp-1">${ing[2]}</span>
+                </div>
+              ` : '<span class="text-xs text-stone-300">Complementos Kawaii</span>'}
+            </div>
+          `;
+        } else if (count === 4) {
+          contentHtml = `
+            <div class="absolute inset-y-0 left-1/2 w-1.5 bg-salmon/40"></div>
+            <div class="absolute inset-x-0 top-1/2 h-1.5 bg-salmon/40"></div>
+            <div class="grid grid-cols-2 grid-rows-2 h-full w-full gap-2 p-1">
+              <div class="flex flex-col items-center justify-center text-center p-1 bg-white/40 rounded-xl">
+                ${ing.length > 0 ? `<span class="text-2xl">🍚</span><p class="text-[8px] font-extrabold text-stone-400 mt-0.5">${ing[0]}</p>` : '<span class="text-[10px] text-stone-300">Base</span>'}
+              </div>
+              <div class="flex flex-col items-center justify-center text-center p-1 bg-white/40 rounded-xl">
+                ${ing.length > 1 ? `<span class="text-2xl">🍳</span><p class="text-[8px] font-extrabold text-stone-400 mt-0.5">${ing[1]}</p>` : '<span class="text-[10px] text-stone-300">Prots</span>'}
+              </div>
+              <div class="flex flex-col items-center justify-center text-center p-1 bg-white/40 rounded-xl">
+                ${ing.length > 2 ? `<span class="text-2xl">🥦</span><p class="text-[8px] font-extrabold text-stone-400 mt-0.5">${ing[2]}</p>` : '<span class="text-[10px] text-stone-300">Verde</span>'}
+              </div>
+              <div class="flex flex-col items-center justify-center text-center p-1 bg-white/40 rounded-xl">
+                ${ing.length > 3 ? `<span class="text-2xl">🍒</span><p class="text-[8px] font-extrabold text-stone-400 mt-0.5">${ing[3]}</p>` : '<span class="text-[10px] text-stone-300">Toppings</span>'}
+              </div>
+            </div>
+          `;
+        }
+
+        container.innerHTML = contentHtml;
+      }
+
+      renderSuggestions() {
+        const pool = document.getElementById('suggestions-pool');
+        pool.innerHTML = this.suggestions.map((sug) => {
+          const isAdded = this.state.ingredients.some(i => i.toLowerCase() === sug.name.toLowerCase());
+          return `
+            <button 
+              onclick="app.addIngredient('${sug.name}')" 
+              ${isAdded ? 'disabled' : ''}
+              class="flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs font-semibold transition-all ${
+                isAdded 
+                  ? 'bg-stone-50 text-stone-300 cursor-not-allowed border border-stone-200/50' 
+                  : 'bg-white hover:bg-crema border-2 border-stone-800/5 text-stone-600 shadow-xs active:scale-95'
+              }"
+            >
+              <span>${sug.emoji}</span>
+              <span>${sug.name}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      renderIngredientsTags() {
+        const container = document.getElementById('added-ingredients-container');
+        const list = document.getElementById('ingredients-tag-list');
+        const listItems = this.state.ingredients;
+
+        if (listItems.length === 0) {
+          container.classList.add('hidden');
+          return;
+        }
+
+        container.classList.remove('hidden');
+        list.innerHTML = listItems.map((ing, idx) => `
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border-2 border-salmon/20 rounded-full text-xs font-bold text-stone-700 shadow-xs">
+            🌸 ${ing}
+            <button onclick="app.removeIngredient(${idx})" class="text-stone-400 hover:text-red-500 font-black ml-1.5">×</button>
+          </span>
+        `).join('');
+      }
+
+      addIngredient(name) {
+        const trimmed = name.trim();
+        if (!trimmed) return;
+        
+        if (this.state.ingredients.some(i => i.toLowerCase() === trimmed.toLowerCase())) {
+          this.state.bentyMood = 'thinking';
+          this.renderMascot();
+          this.setBentySpeech("¡Ese ingrediente ya está en tu caja bento! Añade algo nuevo. 🌸");
+          setTimeout(() => {
+            this.state.bentyMood = 'idle';
+            this.renderMascot();
+          }, 2000);
+          return;
+        }
+
+        this.state.ingredients.push(trimmed);
+        this.state.bentyMood = 'success';
+        this.renderMascot();
+        this.setBentySpeech(`¡Excelente! "${trimmed}" ya está dentro. ¡Sigamos decorando! 🎉`);
+        setTimeout(() => {
+          this.state.bentyMood = 'idle';
+          this.renderMascot();
+        }, 2000);
+
+        this.renderBoxPreview();
+        this.renderSuggestions();
+        this.renderIngredientsTags();
+        this.updateCounters();
+      }
+
+      addIngredientFromInput() {
+        const input = document.getElementById('ingredient-input');
+        this.addIngredient(input.value);
+        input.value = '';
+      }
+
+      handleInputKey(e) {
+        if (e.key === 'Enter') {
+          this.addIngredientFromInput();
+        }
+      }
+
+      removeIngredient(idx) {
+        this.state.ingredients.splice(idx, 1);
+        this.renderBoxPreview();
+        this.renderSuggestions();
+        this.renderIngredientsTags();
+        this.updateCounters();
+        this.setBentySpeech("Ingrediente removido. ¡Ajustaremos la receta de inmediato! 🍲");
+      }
+
+      clearPantry() {
+        this.state.ingredients = [];
+        this.renderBoxPreview();
+        this.renderSuggestions();
+        this.renderIngredientsTags();
+        this.updateCounters();
+        this.setBentySpeech("Caja vaciada. ¿Qué ingredientes listos tenemos ahora? 🛒");
+      }
+
+      // API Caller with Retries & Exponential Backoff
+      async fetchWithRetry(url, options, retries = 5, delay = 1000) {
+        try {
+          const res = await fetch(url, options);
+          if (!res.ok) {
+            if (res.status === 429 && retries > 0) {
+              await new Promise(r => setTimeout(r, delay));
+              return this.fetchWithRetry(url, options, retries - 1, delay * 2);
+            }
+            throw new Error(`HTTP ${res.status}`);
+          }
+          return res;
+        } catch(e) {
+          if (retries > 0) {
+            await new Promise(r => setTimeout(r, delay));
+            return this.fetchWithRetry(url, options, retries - 1, delay * 2);
+          }
+          throw e;
+        }
+      }
+
+      // Trigger AI cooking pipeline
+      async startBentoCooking() {
+        if (this.state.ingredients.length === 0) {
+          this.state.bentyMood = 'thinking';
+          this.renderMascot();
+          this.setBentySpeech("¡Oye! No puedo preparar un bento de aire. Agrega al menos un ingrediente. 🍚");
+          return;
+        }
+
+        this.setView('cooking');
+        this.state.bentyMood = 'cooking';
+        this.renderMascot();
+
+        const logs = [
+          "Buscando las mejores inspiraciones de Kyoto... 🌸🍱",
+          "Calculando simetrías adorables de animales... 🐻🐱",
+          "Mezclando arroz con toques mágicos de Ghibli... 🪄🎨",
+          "Creando un prompt ultra detallado de acuarela... 🎨🖌️",
+          "Invocando al motor de difusión artística... 🌟🖼️"
+        ];
+
+        let logIdx = 0;
+        const logEl = document.getElementById('cooking-log');
+        logEl.innerText = logs[0];
+        const logInterval = setInterval(() => {
+          logIdx++;
+          if (logIdx < logs.length) {
+            logEl.innerText = logs[logIdx];
+          }
+        }, 2200);
+
+        try {
+          const userIngredientsList = this.state.ingredients.join(', ');
+          const systemPrompt = `Actúa como un chef de comida Kawaii japonesa de clase mundial y diseñador conceptual de Studio Ghibli.
+Diseña un Bento Box espectacular usando los ingredientes que te dio el usuario.
+Invéntale un nombre súper tierno en español (Ej: "El Bento del Mapache Feliz", "Aventura de Panda en la Nieve").
+Crea instrucciones breves (máximo 4 pasos), en tono súper dulce y empático, enfocándote de manera muy visual en el emplatado (cómo esculpir el arroz, cortar los vegetales con formas adorables o colocar los ingredientes).
+Por último, diseña un prompt de imagen ultra descriptivo en inglés para alimentar un generador de imágenes. El estilo debe ser "An aesthetic, top-down watercolor food art of a Japanese bento box with food styled into cute animals, pastel colors, soft Studio Ghibli lighting, high quality, highly detailed".
+
+DEBES responder estrictamente con un formato JSON con la siguiente estructura:
+{
+  "bentoName": "Nombre del bento",
+  "recipeSteps": ["Paso 1", "Paso 2", "Paso 3", "Paso 4"],
+  "imagePrompt": "Detailed English image generation prompt..."
+}`;
+
+          const userQuery = `Ingredientes disponibles: ${userIngredientsList}. Diseña mi Bento Box.`;
+          
+          const apiKey = ""; // Runtime auto-resolved key in Canvas
+          const textApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+          const textPayload = {
+            contents: [{ parts: [{ text: userQuery }] }],
+            systemInstruction: { parts: [{ text: systemPrompt }] },
+            generationConfig: {
+              responseMimeType: "application/json",
+              responseSchema: {
+                type: "OBJECT",
+                properties: {
+                  bentoName: { type: "STRING" },
+                  recipeSteps: {
+                    type: "ARRAY",
+                    items: { type: "STRING" }
+                  },
+                  imagePrompt: { type: "STRING" }
+                },
+                required: ["bentoName", "recipeSteps", "imagePrompt"]
+              }
+            }
+          };
+
+          const textResponse = await this.fetchWithRetry(textApiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(textPayload)
+          });
+
+          const textResult = await textResponse.json();
+          const rawText = textResult.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (!rawText) throw new Error("No text candidate generated.");
+
+          const parsedData = JSON.parse(rawText);
+
+          // 2. IMAGE GENERATION (IMAGEN-4)
+          const imageApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+          const imagePayload = {
+            instances: { prompt: parsedData.imagePrompt },
+            parameters: { sampleCount: 1 }
+          };
+
+          let imageUrl = '';
+          try {
+            const imageResponse = await this.fetchWithRetry(imageApiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(imagePayload)
+            });
+            const imageResult = await imageResponse.json();
+            const base64Bytes = imageResult.predictions?.[0]?.bytesBase64Encoded;
+            if (base64Bytes) {
+              imageUrl = `data:image/png;base64,${base64Bytes}`;
+            }
+          } catch(imageErr) {
+            console.warn("Imagen 4 API fail, drawing custom artwork...", imageErr);
+          }
+
+          clearInterval(logInterval);
+
+          // Fallback illustration if image generation is unavailable
+          if (!imageUrl) {
+            imageUrl = `https://placehold.co/600x600/FFFDF9/FFA099?text=${encodeURIComponent(parsedData.bentoName)}`;
+          }
+
+          const completedBento = {
+            id: Date.now(),
+            name: parsedData.bentoName,
+            ingredients: [...this.state.ingredients],
+            steps: parsedData.recipeSteps,
+            imageUrl: imageUrl,
+            imagePrompt: parsedData.imagePrompt,
+            rating: 5,
+            notes: '',
+            date: new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })
+          };
+
+          this.state.currentResult = completedBento;
+          this.renderResultView();
+          this.setView('result');
+
+          // Insignias checking
+          this.checkAchievements();
+
+        } catch(error) {
+          console.error("Cooking failed:", error);
+          clearInterval(logInterval);
+          this.triggerFallbackBento();
+        }
+      }
+
+      // Hardcoded high-quality bento if both AI models fail / offline
+      triggerFallbackBento() {
+        const fallback = {
+          id: Date.now(),
+          name: "Bento Estrellado de Oso Perezoso 🐻💤",
+          ingredients: [...this.state.ingredients],
+          steps: [
+            "Moldea el arroz dándole forma redonda para la cabeza del osito y colócalo en el centro de tu caja bento.",
+            "Utiliza pequeños trozos de espinaca o algas para tallar unos ojitos dormilones súper tiernos.",
+            "Corta las salchichas en forma de pulpos felices e incorpóralas a los costados del compartimento.",
+            "Pon las rebanadas de zanahoria dándoles forma de flor de Sakura para simular un jardín alegre de primavera."
+          ],
+          imageUrl: `https://placehold.co/600x600/FFFDF9/FFA099?text=Oso+Perezoso+Bento`,
+          imagePrompt: "Cute Watercolor Japanese Bento Box with sleeping bear rice",
+          rating: 5,
+          notes: '',
+          date: new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })
+        };
+        this.state.currentResult = fallback;
+        this.renderResultView();
+        this.setView('result');
+      }
+
+      renderResultView() {
+        const bento = this.state.currentResult;
+        if (!bento) return;
+
+        document.getElementById('result-bento-title').innerText = bento.name;
+        document.getElementById('result-bento-image').src = bento.imageUrl;
+        document.getElementById('result-bento-label').innerText = bento.name;
+
+        // Render ingredients tags
+        const ingContainer = document.getElementById('result-ingredients-container');
+        ingContainer.innerHTML = bento.ingredients.map(ing => `
+          <span class="bg-emerald-50 text-emerald-800 text-xs px-3.5 py-1.5 rounded-full font-bold border border-emerald-200">
+            🌸 ${ing}
+          </span>
+        `).join('');
+
+        // Render Steps
+        const stepsContainer = document.getElementById('result-steps-container');
+        stepsContainer.innerHTML = bento.steps.map((st, idx) => `
+          <div class="flex gap-4 items-start bg-[#FFFDF9]/60 p-3 rounded-2xl border border-stone-800/5">
+            <div class="w-8 h-8 rounded-full bg-huevo text-amber-950 flex items-center justify-center font-black text-sm flex-shrink-0 shadow-xs">
+              ${idx + 1}
+            </div>
+            <p class="text-xs text-stone-600 leading-relaxed pt-1.5 font-semibold">
+              ${st}
+            </p>
+          </div>
+        `).join('');
+
+        // Interactive ratings inside result
+        this.state.starValue = 5;
+        this.renderStarPicker();
+
+        // Benty advice message update
+        this.state.bentyMood = 'success';
+        this.renderMascot();
+        const speechHtml = `
+          <div class="bg-white border-2 border-stone-800/10 p-4 rounded-3xl shadow-sm text-center">
+            <p class="text-xs font-black text-[#FFA099]">Benty dice:</p>
+            <p class="text-[11px] text-stone-500 italic mt-1 leading-relaxed">
+              "¡Guau! El "${bento.name}" es la combinación ideal para tus ingredientes. Guárdalo para no olvidarte de la decoración."
+            </p>
+          </div>
+        `;
+        document.getElementById('result-benty-speech').innerHTML = speechHtml;
+      }
+
+      renderStarPicker() {
+        const container = document.getElementById('rating-stars-picker');
+        let html = '';
+        for (let i = 1; i <= 5; i++) {
+          const isActive = i <= this.state.starValue;
+          html += `
+            <button onclick="app.setBentoRating(${i})" class="text-2xl transition hover:scale-125 focus:outline-none">
+              ${isActive ? '⭐' : '☆'}
+            </button>
+          `;
+        }
+        container.innerHTML = html;
+
+        // update sticker in photo based on stars
+        const sticker = document.getElementById('result-rating-sticker');
+        const faceMap = { 1: '😢', 2: '😐', 3: '🙂', 4: '🥰', 5: '💖' };
+        sticker.innerText = faceMap[this.state.starValue];
+      }
+
+      setBentoRating(rating) {
+        this.state.starValue = rating;
+        if (this.state.currentResult) {
+          this.state.currentResult.rating = rating;
+        }
+        this.renderStarPicker();
+      }
+
+      saveCurrentBento() {
+        const bento = this.state.currentResult;
+        if (!bento) return;
+
+        // Check duplicates
+        if (this.state.savedBentos.some(b => b.id === bento.id)) {
+          this.setBentySpeech("¡Este bento ya está bien resguardado en tu álbum de recortes! 📔");
+          return;
+        }
+
+        bento.rating = this.state.starValue;
+        this.state.savedBentos.unshift(bento);
+        this.state.saveToLocalStorage();
+
+        this.setBentySpeech("¡Guardado con amor en tu álbum de recortes virtual! 📔🌸");
+        this.updateProfileWidget();
+        this.updateCounters();
+        
+        // Custom animation
+        this.state.bentyMood = 'proud';
+        this.renderMascot();
+        setTimeout(() => {
+          this.state.bentyMood = 'idle';
+          this.renderMascot();
+        }, 2000);
+      }
+
+      copyPromptToClipboard() {
+        const prompt = this.state.currentResult?.imagePrompt || "Watercolor Japanese Bento Box";
+        const temp = document.createElement('textarea');
+        temp.value = prompt;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        this.setBentySpeech("¡Prompt artístico copiado al portapapeles! Úsalo donde quieras. 📋🎨");
+      }
+
+      addToShoppingListFromBento() {
+        if (!this.state.currentResult) return;
+        
+        // Add random or typical bento toppings to shopping list
+        const extraIngredients = ["Semillas de Sésamo Negro", "Alga Nori decorativa", "Tomates Cherry", "Moldes de Osito"];
+        extraIngredients.forEach(item => {
+          if (!this.state.groceryList.some(g => g.name.toLowerCase() === item.toLowerCase())) {
+            this.state.groceryList.push({ name: item, checked: false });
+          }
+        });
+        this.state.saveToLocalStorage();
+        this.renderGroceryList();
+        this.setBentySpeech("Añadí complementos kawaii de decoración a tu Lista de Compras. 🛒✨");
+      }
+
+      resetPantryAndCook() {
+        this.state.ingredients = [];
+        this.state.currentResult = null;
+        this.renderBoxPreview();
+        this.renderSuggestions();
+        this.renderIngredientsTags();
+        this.updateCounters();
+        this.setView('pantry');
+      }
+
+      // RENDER SCRAPBOOK VIEW WITH ALCOHOL METRICS
+      renderScrapbook() {
+        const grid = document.getElementById('scrapbook-grid');
+        const emptyState = document.getElementById('scrapbook-empty-state');
+        const statsContainer = document.getElementById('album-stats-container');
+        const list = this.state.savedBentos;
+
+        if (list.length === 0) {
+          emptyState.classList.remove('hidden');
+          grid.classList.add('hidden');
+          statsContainer.classList.add('hidden');
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+        grid.classList.remove('hidden');
+        statsContainer.classList.remove('hidden');
+
+        // Render Stats counters
+        const totalBentos = list.length;
+        const totalStars = list.reduce((acc, b) => acc + (b.rating || 5), 0);
+        
+        // Find most used ingredient
+        const allIng = list.flatMap(b => b.ingredients);
+        const counts = {};
+        let mostUsed = 'Arroz';
+        let maxCount = 0;
+        allIng.forEach(i => {
+          counts[i] = (counts[i] || 0) + 1;
+          if (counts[i] > maxCount) {
+            maxCount = counts[i];
+            mostUsed = i;
+          }
+        });
+
+        statsContainer.innerHTML = `
+          <div class="bg-white p-4 rounded-2xl border-2 border-stone-800/10 text-center">
+            <p class="text-[10px] font-black text-stone-400 uppercase tracking-wider">Bentos Creados</p>
+            <p class="text-2xl font-black text-salmon font-fredoka mt-1">${totalBentos}</p>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border-2 border-stone-800/10 text-center">
+            <p class="text-[10px] font-black text-stone-400 uppercase tracking-wider">Estrellas Totales</p>
+            <p class="text-2xl font-black text-huevo-dark font-fredoka mt-1">⭐ ${totalStars}</p>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border-2 border-stone-800/10 text-center">
+            <p class="text-[10px] font-black text-stone-400 uppercase tracking-wider">Ingrediente Favorito</p>
+            <p class="text-sm font-bold text-emerald-800 truncate mt-1.5 px-1">${mostUsed} (${maxCount}x)</p>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border-2 border-stone-800/10 text-center">
+            <p class="text-[10px] font-black text-stone-400 uppercase tracking-wider">Nivel Dulzura</p>
+            <p class="text-sm font-bold text-purple-700 mt-1.5">${totalBentos >= 5 ? 'Chef Kawaii Profesional ✨' : 'Cocinero Aficionado 🎨'}</p>
+          </div>
+        `;
+
+        // Render Bento Polaroid Grid
+        grid.innerHTML = list.map((bento) => {
+          let starHtml = '';
+          for (let i = 1; i <= 5; i++) {
+            starHtml += i <= (bento.rating || 5) ? '★' : '☆';
+          }
+
+          return `
+            <div class="bg-white border-kawaii rounded-3xl p-4 flex flex-col justify-between hover:scale-[1.01] transition-all">
+              
+              <!-- Polaroid card base -->
+              <div class="bg-[#FFFDF9] border border-stone-200 p-3 rounded-2xl shadow-inner relative">
+                
+                <img 
+                  src="${bento.imageUrl}" 
+                  alt="${bento.name}" 
+                  class="w-full aspect-square object-cover rounded-xl border border-stone-100"
+                  onerror="this.src='https://placehold.co/600x600/FFFDF9/FFA099?text=${encodeURIComponent(bento.name)}'"
+                >
+                
+                <div class="pt-3.5 text-center">
+                  <p class="font-comfortaa text-salmon font-bold text-xs tracking-tight line-clamp-1">
+                    ${bento.name}
+                  </p>
+                  <p class="text-[9px] text-stone-400 mt-0.5">${bento.date}</p>
+                </div>
+              </div>
+
+              <!-- Notes and metadata -->
+              <div class="mt-4 space-y-2.5">
+                <div class="bg-crema p-2 rounded-xl border border-stone-800/5">
+                  <p class="text-[8px] uppercase font-black text-stone-400">Ingredientes reciclados:</p>
+                  <p class="text-[11px] text-stone-600 line-clamp-1 italic">${bento.ingredients.join(', ')}</p>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-huevo-dark font-extrabold tracking-wide">${starHtml}</span>
+                  <div class="flex gap-1">
+                    <button onclick="app.viewSavedBentoRecipe(${bento.id})" class="bg-menta text-emerald-800 px-3.5 py-1.5 rounded-xl text-[10px] font-black shadow-xs hover:bg-menta-dark transition">Ver receta 🍳</button>
+                    <button onclick="app.removeSavedBento(${bento.id})" class="text-stone-400 hover:text-red-500 font-bold px-2 text-xs">🗑️</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          `;
+        }).join('');
+      }
+
+      viewSavedBentoRecipe(id) {
+        const found = this.state.savedBentos.find(b => b.id === id);
+        if (found) {
+          this.state.currentResult = found;
+          this.renderResultView();
+          this.setView('result');
+          this.setBentySpeech(`Mostrando receta del baúl: "${found.name}". ✨🍱`);
+        }
+      }
+
+      removeSavedBento(id) {
+        this.state.savedBentos = this.state.savedBentos.filter(b => b.id !== id);
+        this.state.saveToLocalStorage();
+        this.renderScrapbook();
+        this.updateProfileWidget();
+        this.updateCounters();
+        this.setBentySpeech("Bento removido de tu baúl de recuerdos. ¡Espacio libre para seguir diseñando!");
+      }
+
+      // Achievement notifications
+      checkAchievements() {
+        const count = this.state.savedBentos.length;
+        if (count === 1) {
+          this.setBentySpeech("🏆 ¡FELICITACIONES! Has creado y guardado tu primer bento kawaii. Has desbloqueado la insignia 'Chef Novato'. ✨");
+        }
+      }
+
+      // GROCERY LISTS
+      renderGroceryList() {
+        const container = document.getElementById('grocery-items-list');
+        const list = this.state.groceryList;
+
+        if (list.length === 0) {
+          container.innerHTML = `<p class="text-xs text-stone-400 italic text-center py-6">Tu lista de compras está vacía.</p>`;
+          return;
+        }
+
+        container.innerHTML = list.map((item, idx) => `
+          <div class="flex items-center justify-between p-2 bg-white rounded-xl border border-stone-800/5">
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="app.toggleGroceryItem(${idx})" class="w-4 h-4 text-salmon focus:ring-salmon border-stone-300 rounded">
+              <span class="text-xs font-semibold ${item.checked ? 'line-through text-stone-300' : 'text-stone-700'}">${item.name}</span>
+            </label>
+            <button onclick="app.removeGroceryItem(${idx})" class="text-stone-300 hover:text-red-400 font-bold text-sm">×</button>
+          </div>
+        `).join('');
+      }
+
+      addGroceryItem() {
+        const input = document.getElementById('grocery-item-input');
+        const val = input.value.trim();
+        if (!val) return;
+
+        if (this.state.groceryList.some(g => g.name.toLowerCase() === val.toLowerCase())) {
+          input.value = '';
+          return;
+        }
+
+        this.state.groceryList.push({ name: val, checked: false });
+        this.state.saveToLocalStorage();
+        this.renderGroceryList();
+        input.value = '';
+      }
+
+      toggleGroceryItem(idx) {
+        this.state.groceryList[idx].checked = !this.state.groceryList[idx].checked;
+        this.state.saveToLocalStorage();
+        this.renderGroceryList();
+      }
+
+      removeGroceryItem(idx) {
+        this.state.groceryList.splice(idx, 1);
+        this.state.saveToLocalStorage();
+        this.renderGroceryList();
+      }
+
+      clearCompletedGrocery() {
+        this.state.groceryList = this.state.groceryList.filter(g => !g.checked);
+        this.state.saveToLocalStorage();
+        this.renderGroceryList();
+      }
+
+      factoryReset() {
+        const sure = confirm("¿Estás absolutamente seguro de que deseas borrar todas tus obras de arte guardadas del álbum de bentos? Esto no se puede deshacer.");
+        if (sure) {
+          localStorage.clear();
+          this.state = new BentoState();
+          this.state.saveToLocalStorage();
+          this.init();
+          this.setView('pantry');
+          this.setBentySpeech("Se ha restablecido la base de datos de Benty. ¡Todo limpio y listo para empezar de cero! 🍃");
+        }
+      }
+
+      // MODAL DRAWERS
+      showTechniqueModal(id) {
+        const tech = this.techniques[id];
+        if (!tech) return;
+
+        document.getElementById('modal-emoji').innerText = tech.emoji;
+        document.getElementById('modal-title').innerText = tech.title;
+        document.getElementById('modal-desc').innerText = tech.desc;
+
+        const stepsCont = document.getElementById('modal-steps-container');
+        stepsCont.innerHTML = tech.steps.map((st, i) => `
+          <div class="flex gap-2 items-start">
+            <span class="w-5 h-5 bg-salmon text-white font-bold rounded-full flex items-center justify-center text-[10px] flex-shrink-0">${i+1}</span>
+            <p class="text-[11px] text-stone-600 font-medium leading-relaxed">${st}</p>
+          </div>
+        `).join('');
+
+        document.getElementById('technique-modal').classList.remove('hidden');
+      }
+
+      closeTechniqueModal() {
+        document.getElementById('technique-modal').classList.add('hidden');
+      }
+    }
+
+    // Instantiation
+    const app = new BentoApp();
+    window.onload = () => {
+      app.init();
+    };
+  </script>
+
+</body>
+</html>
